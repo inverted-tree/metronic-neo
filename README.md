@@ -10,13 +10,13 @@ Check out the [full example](./template/main.typ) to create your first resume.
 Start by importing the template into your Typst project:
 
 ```typst
-#import "@preview/metronic:1.0.0": *
+#import "@preview/metronic-neo:0.1.0": *
 ```
 
 You can now call the `resume-page` function to generate a resume page:
 
 ```typst
-#import "@preview/metronic:1.0.0": *
+#import "@preview/metronic-neo:0.1.0": *
 
 #show: resume-page.with(
   sidebar: [
@@ -59,6 +59,8 @@ For the body, a `#section` component is available to add sections with icons. eg
 ```
 
 ## Fonts
+
+This template uses the IBM Plex font family. You can download it here: [IBM Plex](https://github.com/IBM/plex/releases/latest)
 
 This template uses FontAwesome icons. For icons to work properly, please include the ttf files into your project directory.
 

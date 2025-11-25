@@ -31,7 +31,7 @@
   accent-color: none,
   background-color: none,
 ) = {
-  let config = (:)  // empty dictionary
+  let config = (:) // empty dictionary
   if accent-color != none {
     config.insert("accent-color", accent-color)
   }
@@ -48,7 +48,7 @@
 #show heading.where(level: 1): set text(size: 22pt, weight: "bold")
 #show heading.where(level: 2): set text(size: 14pt, weight: "bold")
 
-#let font = "Inter"
+#let font = "IBM Plex Sans"
 
 // --------------------------------------
 // Helpers
@@ -79,8 +79,8 @@
       text(
         size: 10pt,
         fill: rgb(get-accent-color()).darken(40%),
-        weight: "medium"
-      )[#content]
+        weight: "medium",
+      ) [#content],
     )
     #h(1pt)
   ]
@@ -88,15 +88,12 @@
 
 // A group of tags
 #let tags(..items) = {
-  box(
-    width: 100%, clip: true,
-    {
-      for item in items.pos() {
-        tag(item)
-        h(4pt) // Add horizontal spacing between tags
-      }
+  box(width: 100%, clip: true, {
+    for item in items.pos() {
+      tag(item)
+      h(4pt) // Add horizontal spacing between tags
     }
-  )
+  })
 }
 
 #let small(content) = {
@@ -111,14 +108,9 @@
   text(size: 18pt, weight: "bold")[#content]
 }
 
-#let section(
-  icon: "",
-  name,
-  color: none,
-  content
-) = {
+#let section(icon: "", name, color: none, content) = {
   context {
-    let title = [== #fa-icon(icon) #h(8pt) #name]
+    let title = [== #fa-icon(icon) #h(8pt) name]
 
     let c = if color != none {
       color
@@ -126,17 +118,12 @@
       detect-text-color(get-current-background-color())
     }
 
-    text(fill: c)[== #fa-icon(icon) #h(8pt) #name]
+    text(fill: c, font: "IBM Plex Mono")[== #fa-icon(icon) #underline[#name]]
     pad(y: 15pt)[#content]
   }
 }
 
-#let resume-layout = (
-  sidebar: none,
-  color: gray,
-  base-color: white,
-  content
-) => {
+#let resume-layout = (sidebar: none, color: gray, base-color: white, content) => {
   if sidebar == none {
     pad(20pt, content)
   } else {
@@ -147,8 +134,7 @@
       context {
         set-current-background-color(color)
         sidebar
-      },
-      context {
+      }, context {
         set-current-background-color(base-color)
         content
       },
@@ -164,7 +150,7 @@
   linkedin: "",
   website: "",
   x: "",
-)  => {
+) => {
   if email != "" [
     #fa-envelope(solid: true) #h(5pt) #email \
   ]
@@ -189,31 +175,19 @@
 }
 
 #let render-area(text-fill, content) = {
-    pad(y: 20pt, left: 20pt, right: 14pt, [
-      #set text(
-        font: font,
-        fill: text-fill,
-        size: 12pt
-      )
-      #content
-    ])
+  pad(y: 20pt, left: 20pt, right: 14pt, [
+    #set text(font: font, fill: text-fill, size: 12pt)
+    #content
+  ])
 }
 
-#let resume-page = (
-  sidebar: none,
-  main
-) => {
+#let resume-page = (sidebar: none, main) => {
   context {
     set page("a4", margin: 0pt, fill: get-background-color())
-    resume-layout(
-      base-color: get-background-color(),
-      color: get-accent-color(),
-      sidebar: if sidebar != none {
-        render-area(detect-text-color(get-accent-color()), sidebar)
-      } else {
-        none
-      },
-      render-area(detect-text-color(get-background-color()), main)
-    )
+    resume-layout(base-color: get-background-color(), color: get-accent-color(), sidebar: if sidebar != none {
+      render-area(detect-text-color(get-accent-color()), sidebar)
+    } else {
+      none
+    }, render-area(detect-text-color(get-background-color()), main))
   }
 }
