@@ -27,6 +27,18 @@
   current-background-color.update(c => col)
 }
 
+#let small(content) = {
+  text(size: 10pt)[#content]
+}
+
+#let medium(content) = {
+  text(size: 14pt, weight: "bold")[#content]
+}
+
+#let large(content) = {
+  text(size: 18pt, weight: "bold")[#content]
+}
+
 #let theme(
   accent-color: none,
   background-color: none,
@@ -54,6 +66,78 @@
 // Helpers
 // --------------------------------------
 
+#let contact-block(contact-info) = small[
+  #contact-info
+]
+
+#let recipient-block(recipient-info) = small[
+  #recipient-info
+]
+
+#let language-flags = (
+  // Germanic
+  "english": "gb",
+  "german": "de",
+  "dutch": "nl",
+  "swedish": "se",
+  "norwegian": "no",
+  "danish": "dk",
+  "icelandic": "is",
+
+  // Romance
+  "french": "fr",
+  "spanish": "es",
+  "portuguese": "pt",
+  "italian": "it",
+  "romanian": "ro",
+
+  // Slavic
+  "russian": "ru",
+  "polish": "pl",
+  "czech": "cz",
+  "slovak": "sk",
+  "ukrainian": "ua",
+
+  // Others (Europe)
+  "greek": "gr",
+  "finnish": "fi",
+  "hungarian": "hu",
+
+  // Middle East / Africa
+  "arabic": "sa",
+  "hebrew": "il",
+  "turkish": "tr",
+
+  // Asia
+  "chinese": "cn",
+  "japanese": "jp",
+  "korean": "kr",
+  "hindi": "in",
+  "thai": "th",
+  "vietnamese": "vn",
+  "indonesian": "id",
+)
+
+#let flag-for(lang, width: 1cm) = {
+  let key = lang.lower()
+  let code = language-flags.at(key, default: "un")
+  image("assets/flags/svg/" + code + ".svg", width: width)
+}
+
+#let language(lang, prof, cc: none, img: none) = {
+  if img == none {
+    if cc == none {
+      let key = lower(lang)
+      cc = language-flags.at(key, default: "un")
+    }
+    img = "assets/flags/svg/" + cc + ".svg"
+  }
+
+  [
+    #box(baseline: 0.2em, image(img, height: 1em)) #h(0.5em) #lang (#prof)#linebreak()
+  ]
+}
+
 // White text on darker background, black on light ones (with bias)
 #let detect-text-color = (bg-color) => {
   let rgb = bg-color.rgb()
@@ -69,6 +153,51 @@
   }
 }
 
+// Image box (optionally framed)
+#let foto-box(img, size: 5cm, padding: 4pt, radius: 0pt) = {
+  align(center)[ #box(
+    fill: white,
+    inset: padding,
+    radius: radius,
+    box(
+      radius: radius * .5,
+      clip: true,
+      img,
+    ),
+  )]
+}
+
+// Create a short summary section for the sidebar
+#let summary(content) = [
+  #line(length: 100%, stroke: white)
+  #v(5pt)
+
+  #small[#content]
+
+  #v(5pt)
+  #line(length: 100%, stroke: white)
+]
+
+// Creates a monospace bullet item
+#let hollow-tag(content) = [
+  #context [
+    #box(
+      fill: get-accent-color().lighten(50%),
+      inset: (x: 8pt, y: 4pt),
+      radius: 4pt,
+      box(
+        text(
+          size: 10pt,
+          // fill: rgb(get-accent-color()).darken(40%),
+          weight: "medium",
+          radius: 2pt,
+        )[#content],
+      ),
+    )
+    #h(1pt)
+  ]
+]
+
 // Creates a monospace bullet item
 #let tag(content) = [
   #context [
@@ -80,7 +209,7 @@
         size: 10pt,
         fill: rgb(get-accent-color()).darken(40%),
         weight: "medium",
-      ) [#content],
+      )[#content],
     )
     #h(1pt)
   ]
@@ -97,38 +226,34 @@
 }
 
 // Creates a monospace bullet item with an icon
-#let iconTag(name, icon: none) = {
+#let icon-tag(name, icon: none) = {
   if icon == none {
-    icon = "assets/devicons/svg/" + name + ".svg"
+    icon = "assets/devicons/svg/" + lower(name) + ".svg"
+  } else if icon == "" {
+    icon = "assets/devicons/svg/placeholder.svg"
   }
 
-  let base = 1em * 0.15
+  let base = .15em
   tag([
     #box(baseline: base, image(icon, height: 1em))
+    #h(.2em)
     #text(font: "IBM Plex Mono")[ #name ]
   ])
 }
 
 // Creates a group of iconTags
-#let iconTags(..items) = {
+#let icon-tags(..items) = {
   box(width: 100%, clip: true, {
-    for (name, icon) in items.pos() {
-      iconTag(name, icon)
-      h(4pt)
+    for item in items.pos() {
+      if type(item) == array {
+        let (name, icon) = item
+        icon-tag(name, icon: icon)
+      } else {
+        icon-tag(item)
+      }
+      h(.2em)
     }
   })
-}
-
-#let small(content) = {
-  text(size: 10pt)[#content]
-}
-
-#let medium(content) = {
-  text(size: 14pt, weight: "bold")[#content]
-}
-
-#let large(content) = {
-  text(size: 18pt, weight: "bold")[#content]
 }
 
 #let section(icon: "", name, color: none, content) = {
@@ -146,7 +271,12 @@
   }
 }
 
-#let resume-layout = (sidebar: none, color: gray, base-color: white, content) => {
+#let resume-layout = (
+  sidebar: none,
+  color: gray,
+  base-color: white,
+  content,
+) => {
   if sidebar == none {
     pad(20pt, content)
   } else {
@@ -207,10 +337,59 @@
 #let resume-page = (sidebar: none, main) => {
   context {
     set page("a4", margin: 0pt, fill: get-background-color())
-    resume-layout(base-color: get-background-color(), color: get-accent-color(), sidebar: if sidebar != none {
-      render-area(detect-text-color(get-accent-color()), sidebar)
-    } else {
-      none
-    }, render-area(detect-text-color(get-background-color()), main))
+    resume-layout(
+      base-color: get-background-color(),
+      color: get-accent-color(),
+      sidebar: if sidebar != none {
+        render-area(
+          detect-text-color(get-accent-color()),
+          sidebar,
+        )
+      } else {
+        none
+      },
+      render-area(
+        detect-text-color(get-background-color()),
+        main,
+      ),
+    )
   }
 }
+
+#let cover-letter(
+  contact-info,
+  recipient-info,
+  city: "",
+  date: none,
+  letter-title,
+  content,
+) = [ #resume-page(
+  [ #pad(
+    rest: 6%,
+    [
+      #contact-block(contact-info)
+      #v(2em)
+
+      #recipient-block(recipient-info)
+      #v(2em)
+
+      #if city != "" {
+        if not city.contains(",") {
+          city = [#city, ]
+        } else {
+          city = [#city ]
+        }
+      }
+      #if date == none {
+        date = datetime.today().display("[day].[month].[year]")
+      }
+      #align(right)[#small[#city#date]]
+      #h(2em)
+
+      = #letter-title
+      #h(4em)
+
+      #content
+    ],
+  )],
+)]
