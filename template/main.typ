@@ -1,128 +1,133 @@
-#import "@preview/metronic:1.0.0": *
+#import "@preview/metronic-neo:0.1.0": *
 
 #theme(
   accent-color: rgb("61B7AE"),
   background-color: rgb("F2F0EF"),
 )
 
-#show: resume-page.with(
-  sidebar: [
-    = Jane Doe
+#show: resume-page.with(sidebar: [
 
-    #medium("Business Development Manager")
+  = Byte O. Verflow
 
-    #v(5pt)
+  #medium("Senior Brainf*ck Developer")
 
-    Strategic business leader with proven expertise in market expansion and revenue growth.
+  #v(5pt)
 
-    Skilled in building partnerships, developing client relationships, and driving organizational success through innovative solutions.
+  #summary([Senior Brainfuck engineer with 10+ years of experience.
+  Known for building production-ready software in a language nobody else knows.
+  Strong focus on pointer acrobatics and explaining my conde to LLMs. ])
 
-    Passionate about sustainable business practices and team development.
+  #v(5pt)
 
-    #v(5pt)
+  #contact(
+    phone: "+1 234 567890",
+    email: "byte@bfdev.example",
+    github: "github.com/byte-overflow",
+    location: "Berlin, Germany",
+    linkedin: "linkedin.com/in/byte-bf",
+  )
 
-    #contact(
-      phone: "555-0123",
-      linkedin: "janedoe",
-      email: "jane.doe@email.com",
-      location: "Chicago, USA"
-    )
+  #v(5pt)
 
-    #v(5pt)
+  === Languages
 
-    #section(icon: "university", "Education")[
-      #small()[
-        MBA, Business Administration \
-        Business School (2015-2017)
+  #v(5pt)
 
-        BA, International Relations \
-        State University (2010-2014)
-      ]
-    ]
+  #language("English", "Native", cc: "us")
+  #language("German", "C1")
+  #language("French", "B2")
 
-    #section(icon: "check-double", "Skills")[
-      === Core Competencies
+  #v(10pt)
 
-      #v(5pt)
+  === Core Interests
 
-      #tags(
-        "Strategy",
-        "Leadership",
-        "Negotiations",
-        "Market Analysis",
-        "Client Relations",
-        "Public Speaking",
-        "Business Development",
-        "MS Word",
-        "Data analytics"
-      )
-
-      === Industries
-
-      #v(5pt)
-
-      #tags(
-        "Retail",
-        "Finance",
-        "Consulting",
-        "Healthcare",
-        "Technology",
-        "Education",
-        "Real Estate",
-        "Marketing",
-        "Operations",
-        "Sales",
-        "Human Resources",
-        "Digital"
-      )
-    ]
-  ]
-)
-
-#section(icon: "briefcase", "Professional Experience")[
-  === Business Development Director
-  Global Solutions Inc. - 2023-Present
-
-  Leading strategic growth initiatives and managing key client relationships across multiple regions.
-  Focus on developing new market opportunities and enhancing existing partnerships.
-
-  Key Achievements:
-  - Increased regional revenue by 45% through strategic partnerships
-  - Led team of 12 business development managers
-  - Launched successful market entry in 3 new territories
-  - Developed and implemented client retention program
-  - Streamlined operational processes
-  - Mentored junior team members
+  #v(5pt)
 
   #tags(
-    "Strategic Planning",
-    "Team Leadership",
-    "Market Analysis",
-    "Client Relations",
-    "Revenue Growth"
+    "Brainf*ck",
+    "Ook!",
+    "Esoteric Language Design",
+    "Obfuscation Engineering",
+    "Compiler Construction",
+    "Tape Optimization",
+    "Punchcard Stamping",
+    "Performance Witchcraft",
+  )
+
+  === Programming Languages
+
+  #v(5pt)
+
+  #icon-tags(
+    "Bash",
+    "Clojure",
+    "PHP",
+    "COBOL",
+    "Erlang",
+    "R",
   )
 
   #v(10pt)
 
-  === Senior Business Manager
-  Innovation Partners - 2020-2023
+  === Technical Abilities
 
-  Managed portfolio of key accounts while developing and executing business growth strategies.
-  Led cross-functional teams in implementing innovative solutions for clients.
+  #v(5pt)
 
-  Notable Achievements:
-
-    - Successfully managed \$20M client portfolio
-    - Developed new business vertical generating 30% growth
-    - Led organizational change management initiatives
-    - Established strategic partnerships with industry leaders
-    - Implemented customer success program
-
-  #tags(
-    "Account Management",
-    "Business Strategy",
-    "Change Management",
-    "Client Relations",
-    "Revenue Growth"
+  #icon-tags(
+    "Docker",
+    "LLVM",
+    "Git",
+    "Slack",
+    "Latex",
+    "SSH",
+    "Apache",
+    "Emacs",
+    "QT",
   )
+])
+
+#section("Professional Experience")[
+
+  == Senior Brainfuck Developer
+  #small[_NullPointer Innovations • 2021 - present_]
+  #v(1pt)
+  - Led rewrite of company’s critical microservice into pure Brainfuck;
+    achieved 100% fewer dependencies and 300% more questions from management.
+  - Designed an advanced Brainfuck code formatter that outputs code
+    looking exactly as unreadable as before (backwards compatibility guaranteed).
+  - Architected a CI/CD pipeline that refuses to deploy if code is _too readable_.
+
+  == Brainfuck Engineer
+  #small[_ObfusCo LLC • 2014 - 2021_]
+  #v(1pt)
+  - Implemented a Brainfuck-based authentication algorithm;
+    auditors refused to review it, thereby improving security dramatically.
+  - Introduced team tradition of “Tape Alignment Friday” to improve morale.
+]
+
+#section("Education")[
+
+  == M.Sc. Computer Science
+  #small[_Technical University of Berlin • 2017_]
+  #v(1pt)
+
+  - Thesis: *“Efficient Memory Tape Models for Esoteric Languages”* (Efficiency not guaranteed.)
+
+  == 2014 — B.Sc. Computer Science
+  #small[_University of Somewhere • 2014_]
+  #v(1pt)
+]
+
+#section("Projects & Contributions")[
+  - *bf-enterprise™* — The world’s first Brainfuck framework
+    with enterprise-grade buzzwords (synergy modules still in beta).
+  - *bflint* — A linting tool that warns
+    “no human should write this, please reconsider.”
+  - Contributor to *Esoterica Standard Library (ESL)* —
+    adds high-level abstractions like “loop but on purpose.”
+]
+
+#section("Public Speaking")[
+  - “Memory-Tape Microservices: A Tragicomedy” — _Berlin Esolang Meetup_
+  - “Writing Maintainable Brainfuck (lol)” — _Internal tech talk, resulted in laughter and one resignation._
 ]
