@@ -118,12 +118,6 @@
   "indonesian": "id",
 )
 
-#let flag-for(lang, width: 1cm) = {
-  let key = lang.lower()
-  let code = language-flags.at(key, default: "un")
-  image("assets/flags/svg/" + code + ".svg", width: width)
-}
-
 #let language(lang, prof, cc: none, img: none) = {
   if img == none {
     if cc == none {
@@ -176,26 +170,6 @@
 
   #v(5pt)
   #line(length: 100%, stroke: white)
-]
-
-// Creates a monospace bullet item
-#let hollow-tag(content) = [
-  #context [
-    #box(
-      fill: get-accent-color().lighten(50%),
-      inset: (x: 8pt, y: 4pt),
-      radius: 4pt,
-      box(
-        text(
-          size: 10pt,
-          // fill: rgb(get-accent-color()).darken(40%),
-          weight: "medium",
-          radius: 2pt,
-        )[#content],
-      ),
-    )
-    #h(1pt)
-  ]
 ]
 
 // Creates a monospace bullet item
