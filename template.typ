@@ -230,18 +230,13 @@
   })
 }
 
-#let section(icon: "", name, color: none, content) = {
+#let section(icon: "", name, content) = {
   context {
-    let title = [== #fa-icon(icon) #h(8pt) name]
+    let icon-str = if icon == "" { "" } else { [#fa-icon(icon) #h(8pt)] }
+    let title = [== #icon-str#underline[#name]]
 
-    let c = if color != none {
-      color
-    } else {
-      detect-text-color(get-current-background-color())
-    }
-
-    text(fill: c, font: "IBM Plex Mono")[== #fa-icon(icon) #underline[#name]]
-    pad(y: 15pt)[#content]
+    text(font: "IBM Plex Mono")[ #title ]
+    pad(y: 16pt)[#content]
   }
 }
 
