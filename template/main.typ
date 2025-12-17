@@ -1,7 +1,7 @@
 #import "@preview/metronic-neo:0.1.0": *
 
 #theme(
-  accent-color: rgb("61B7AE"),
+  accent-color: rgb("BAC7CE"),
   background-color: rgb("F2F0EF"),
 )
 

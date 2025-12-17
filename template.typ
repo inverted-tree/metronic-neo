@@ -7,7 +7,7 @@
 #let current-background-color = state("current-background-color", rgb("ffffff"))
 
 #let theme-state = state("theme", (
-  accent-color: rgb("61B7AE"),
+  accent-color: rgb("BAC7CE"),
   background-color: rgb("F2F0EF"),
 ))
 
@@ -334,7 +334,7 @@
   content,
 ) = [ #resume-page(
   [ #pad(
-    rest: 6%,
+    rest: 5%,
     [
       #contact-block(contact-info)
       #v(2em)

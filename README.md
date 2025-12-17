@@ -3,7 +3,7 @@
 A Typst template for a slick and professional looking resume.
 Check out the [full example](./template/main.typ) to create your first resume.
 
-![](thumbnail.png)
+![](assets/thumbnail.png)
 
 ## Getting started
 
