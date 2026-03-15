@@ -150,7 +150,7 @@
 
 #let _contact-icon(name, fill: "#000000") = {
   let svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='" + fill + "' d='" + _icon-paths.at(name) + "'/></svg>"
-  box(baseline: 0.15em, image.decode(svg, format: "svg", height: 0.85em))
+  box(baseline: 0.15em, image(bytes(svg), format: "svg", height: 0.85em))
 }
 
 #let contact(
