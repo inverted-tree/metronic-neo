@@ -1,0 +1,62 @@
+name: Render thumbnail
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - uses: typst-community/setup-typst@v4
+
+      - name: Install IBM Plex fonts
+        run: |
+          RELEASES=$(curl -fsSL "https://api.github.com/repos/IBM/plex/releases?per_page=50")
+          SANS_URL=$(echo "$RELEASES" | jq -r '[.[] | select(.tag_name | test("^@ibm/plex-sans@"))][0].assets[] | select(.name == "ibm-plex-sans.zip") | .browser_download_url')
+          MONO_URL=$(echo "$RELEASES" | jq -r '[.[] | select(.tag_name | test("^@ibm/plex-mono@"))][0].assets[] | select(.name == "ibm-plex-mono.zip") | .browser_download_url')
+          curl -fL "$SANS_URL" -o ibm-plex-sans.zip
+          curl -fL "$MONO_URL" -o ibm-plex-mono.zip
+          mkdir -p ~/.local/share/fonts
+          unzip -q ibm-plex-sans.zip -d ibm-plex-sans
+          unzip -q ibm-plex-mono.zip -d ibm-plex-mono
+          find ibm-plex-sans ibm-plex-mono -name "*.ttf" -exec cp {} ~/.local/share/fonts/ \;
+          fc-cache -f
+
+      - name: Install FontAwesome fonts
+        run: |
+          npm pack @fortawesome/fontawesome-free
+          tar -xf fortawesome-fontawesome-free-*.tgz
+          cp package/webfonts/*.ttf ~/.local/share/fonts/
+          fc-cache -f
+
+      - name: Install package locally
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+          PKG_DIR="$HOME/.local/share/typst/packages/local/metronic-neo/$VERSION"
+          mkdir -p "$PKG_DIR"
+          cp -r "$VERSION/." "$PKG_DIR/"
+
+      - name: Render thumbnail
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+          typst compile "$VERSION/template/main.typ" "$VERSION/assets/thumbnail.png" --ppi 150
+          cp "$VERSION/assets/thumbnail.png" "$VERSION/thumbnail.png"
+
+      - name: Commit and push
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "$VERSION/assets/thumbnail.png" "$VERSION/thumbnail.png"
+          git commit -m "chore: render thumbnail for ${{ github.ref_name }}"
+          git push origin HEAD:main
