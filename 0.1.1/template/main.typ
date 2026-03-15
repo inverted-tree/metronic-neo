@@ -113,7 +113,7 @@
 
   - Thesis: *“Efficient Memory Tape Models for Esoteric Languages”* (Efficiency not guaranteed.)
 
-  == 2014 — B.Sc. Computer Science
+  == B.Sc. Computer Science
   #small[_University of Somewhere • 2014_]
   #v(1pt)
 ]
