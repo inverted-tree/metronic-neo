@@ -32,13 +32,6 @@ jobs:
           find ibm-plex-sans ibm-plex-mono -name "*.ttf" -exec cp {} ~/.local/share/fonts/ \;
           fc-cache -f
 
-      - name: Install FontAwesome fonts
-        run: |
-          npm pack @fortawesome/fontawesome-free
-          tar -xf fortawesome-fontawesome-free-*.tgz
-          cp package/webfonts/*.ttf ~/.local/share/fonts/
-          fc-cache -f
-
       - name: Install package locally
         run: |
           VERSION=${{ steps.version.outputs.version }}

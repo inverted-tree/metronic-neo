@@ -1,5 +1,3 @@
-#import "@preview/fontawesome:0.5.0": *
-
 // --------------------------------------
 // Theme
 // --------------------------------------
@@ -134,9 +132,8 @@
   #lang (#prof)#linebreak()
 ]
 
-#let section(icon: "", name, content) = {
-  let icon-str = if icon == "" { "" } else { [#fa-icon(icon) #h(8pt)] }
-  text(font: "IBM Plex Mono")[== #icon-str#underline[#name]]
+#let section(name, content) = {
+  text(font: "IBM Plex Mono")[== #underline[#name]]
   pad(y: 16pt)[#content]
 }
 
@@ -149,13 +146,13 @@
   website: "",
   x: "",
 ) = {
-  if email != "" [#fa-envelope(solid: true) #h(5pt) #email \]
-  if phone != "" [#fa-phone(solid: true) #h(5pt) #phone \]
-  if github != "" [#fa-github(solid: true) #h(5pt) #github \]
-  if linkedin != "" [#fa-linkedin(solid: true) #h(5pt) #linkedin \]
-  if location != "" [#fa-location-dot(solid: true) #h(5pt) #location \]
-  if website != "" [#fa-globe(solid: false) #h(5pt) #website \]
-  if x != "" [#fa-x-twitter(solid: true) #h(5pt) #x \]
+  if email != "" [#email \]
+  if phone != "" [#phone \]
+  if github != "" [#github \]
+  if linkedin != "" [#linkedin \]
+  if location != "" [#location \]
+  if website != "" [#website \]
+  if x != "" [#x \]
 }
 
 #let render-area(text-fill, content) = {
