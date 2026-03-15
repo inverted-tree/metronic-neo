@@ -1,0 +1,24 @@
+[package]
+name = "metronic-neo"
+version = "0.1.1"
+entrypoint = "template.typ"
+authors = [
+	"Patrick Rabier <https://tronica.io>",
+	"Lukas Schröder <https://github.com/inverted-tree>",
+	]
+license = "MIT"
+description = "A slightly improved, clean, colorful, and modern CV template."
+repository = "https://github.com/inverted-tree/metronic-neo-cv"
+categories = ["cv"]
+keywords = [
+	"CV",
+	"Resume",
+	"Color",
+	"Sidebar",
+	]
+exclude = ["*.pdf"]
+
+[template]
+path = "template"
+entrypoint = "main.typ"
+thumbnail = "thumbnail.png"
