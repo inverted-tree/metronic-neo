@@ -134,7 +134,7 @@
 
 #let section(name, content) = {
   text(font: "IBM Plex Mono")[== #underline[#name]]
-  pad(y: 16pt)[#content]
+  pad(top: 8pt, bottom: 24pt)[#content]
 }
 
 // SVG path data (24×24 viewBox) for contact field icons
@@ -173,7 +173,7 @@
 }
 
 #let render-area(text-fill, content) = {
-  pad(y: 20pt, left: 20pt, right: 14pt, [
+  pad(20pt, [
     #set text(font: font, fill: text-fill, size: 12pt)
     #content
   ])
