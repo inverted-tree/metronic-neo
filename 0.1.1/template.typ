@@ -146,13 +146,13 @@
   website: "",
   x: "",
 ) = {
-  if email != "" [#email \]
-  if phone != "" [#phone \]
-  if github != "" [#github \]
-  if linkedin != "" [#linkedin \]
-  if location != "" [#location \]
-  if website != "" [#website \]
-  if x != "" [#x \]
+  if email != "" [#email#linebreak()]
+  if phone != "" [#phone#linebreak()]
+  if github != "" [#github#linebreak()]
+  if linkedin != "" [#linkedin#linebreak()]
+  if location != "" [#location#linebreak()]
+  if website != "" [#website#linebreak()]
+  if x != "" [#x#linebreak()]
 }
 
 #let render-area(text-fill, content) = {
